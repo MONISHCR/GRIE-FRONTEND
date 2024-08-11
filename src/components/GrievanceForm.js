@@ -7,11 +7,16 @@ function GrievanceForm() {
   const [semester, setSemester] = useState('');
   const [file, setFile] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [open, setOpen] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
     try {
       await axios.post('https://grie.onrender.com/api/grievances', {
         description,
@@ -22,6 +27,8 @@ function GrievanceForm() {
       setOpen(true);
     } catch (err) {
       alert('Error submitting grievance');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -29,16 +36,17 @@ function GrievanceForm() {
     setDescription('');
     setSemester('');
     setFile('');
-    setSubmitted(false);
+    setSubmitted(false);  // Reset the form
     setOpen(false);
   };
 
   const handleClose = () => {
     if (open) {
       setOpen(false);
-      setShowThankYou(true); // Show thank you modal after closing the first one
+      setShowThankYou(true);
     } else {
       setShowThankYou(false);
+      setSubmitted(false);  // Reset the form when thank you modal is closed
     }
   };
 
@@ -89,8 +97,14 @@ function GrievanceForm() {
               onChange={(e) => setFile(e.target.value)}
               sx={{ mb: 2 }}
             />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Submit
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary" 
+              fullWidth 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Submitting...' : 'Submit'} 
             </Button>
           </form>
         ) : null}
