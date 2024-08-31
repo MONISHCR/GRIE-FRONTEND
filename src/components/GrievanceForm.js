@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography, Box, MenuItem, Modal } from '@mui/material';
+import { Button, TextField, Container, Typography, Box, MenuItem, Modal, Paper } from '@mui/material';
 import axios from 'axios';
 
 function GrievanceForm() {
@@ -18,7 +18,7 @@ function GrievanceForm() {
     setIsSubmitting(true);
 
     try {
-      await axios.post('https://grie.onrender.com/api/grievances', {
+      await axios.post('https://backend-mu-ebon.vercel.app/api/grievances', {
         description,
         semester,
         file,
@@ -51,62 +51,65 @@ function GrievanceForm() {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ bgcolor: '#f2f8ff', p: 3, borderRadius: 2 }}>
       <Box sx={{ mt: 8 }}>
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h4" align="center" gutterBottom sx={{ color: '#1976d2' }}>
           Submit a Grievance
         </Typography>
         {!submitted ? (
-          <form onSubmit={handleSubmit}>
-            <TextField
-              label="Describe your problem"
-              variant="outlined"
-              multiline
-              rows={4}
-              fullWidth
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              select
-              label="Select Semester"
-              variant="outlined"
-              fullWidth
-              value={semester}
-              onChange={(e) => setSemester(e.target.value)}
-              required
-              sx={{ mb: 2 }}
-            >
-              <MenuItem value="Not Semester">Not Semester</MenuItem>
-              <MenuItem value="Semester 8">Semester 8</MenuItem>
-              <MenuItem value="Semester 7">Semester 7</MenuItem>
-              <MenuItem value="Semester 6">Semester 6</MenuItem>
-              <MenuItem value="Semester 5">Semester 5</MenuItem>
-              <MenuItem value="Semester 4">Semester 4</MenuItem>
-              <MenuItem value="Semester 3">Semester 3</MenuItem>
-              <MenuItem value="Semester 2">Semester 2</MenuItem>
-              <MenuItem value="Semester 1">Semester 1</MenuItem>
-            </TextField>
-            <TextField
-              label="File URL (optional)"
-              variant="outlined"
-              fullWidth
-              value={file}
-              onChange={(e) => setFile(e.target.value)}
-              sx={{ mb: 2 }}
-            />
-            <Button 
-              type="submit" 
-              variant="contained" 
-              color="primary" 
-              fullWidth 
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit'} 
-            </Button>
-          </form>
+          <Paper elevation={6} sx={{ p: 3, borderRadius: 2, bgcolor: '#e3f2fd', border: '1px solid #bbdefb' }}>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                label="Describe your problem"
+                variant="outlined"
+                multiline
+                rows={4}
+                fullWidth
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                select
+                label="Select Semester"
+                variant="outlined"
+                fullWidth
+                value={semester}
+                onChange={(e) => setSemester(e.target.value)}
+                required
+                sx={{ mb: 2 }}
+              >
+                <MenuItem value="Not Semester">Not Semester</MenuItem>
+                <MenuItem value="Semester 8">Semester 8</MenuItem>
+                <MenuItem value="Semester 7">Semester 7</MenuItem>
+                <MenuItem value="Semester 6">Semester 6</MenuItem>
+                <MenuItem value="Semester 5">Semester 5</MenuItem>
+                <MenuItem value="Semester 4">Semester 4</MenuItem>
+                <MenuItem value="Semester 3">Semester 3</MenuItem>
+                <MenuItem value="Semester 2">Semester 2</MenuItem>
+                <MenuItem value="Semester 1">Semester 1</MenuItem>
+              </TextField>
+              <TextField
+                label="File URL (optional)"
+                variant="outlined"
+                fullWidth
+                value={file}
+                onChange={(e) => setFile(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <Button 
+                type="submit" 
+                variant="contained" 
+                color="primary" 
+                fullWidth 
+                disabled={isSubmitting}
+                sx={{ backgroundColor: '#1976d2', ':hover': { backgroundColor: '#1565c0' } }}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit'} 
+              </Button>
+            </form>
+          </Paper>
         ) : null}
 
         <Modal open={open} onClose={handleClose}>
@@ -117,13 +120,13 @@ function GrievanceForm() {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               width: 400,
-              bgcolor: 'background.paper',
-              border: '2px solid #000',
+              bgcolor: '#ffebee',
+              borderRadius: 2,
               boxShadow: 24,
               p: 4,
             }}
           >
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ color: '#c62828' }}>
               Grievance Submitted Successfully!
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -131,7 +134,7 @@ function GrievanceForm() {
             </Typography>
             <Button
               variant="contained"
-              color="primary"
+              color="error"
               onClick={handleMore}
               sx={{ marginRight: 2 }}
             >
@@ -151,13 +154,13 @@ function GrievanceForm() {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               width: 400,
-              bgcolor: 'background.paper',
-              border: '2px solid #000',
+              bgcolor: '#e8f5e9',
+              borderRadius: 2,
               boxShadow: 24,
               p: 4,
             }}
           >
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ color: '#388e3c' }}>
               Thank You for Reaching Out!
             </Typography>
             <Typography variant="body1">
@@ -165,7 +168,7 @@ function GrievanceForm() {
             </Typography>
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               onClick={handleClose}
               sx={{ marginTop: 2 }}
             >
