@@ -9,7 +9,7 @@ function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://backend-mu-ebon.vercel.app/api/admin/login', {
+      const res = await axios.post('https://grie-backend.vercel.app/api/admin/login', {
         username,
         password,
       });

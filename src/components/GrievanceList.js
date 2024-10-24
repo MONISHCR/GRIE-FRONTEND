@@ -9,7 +9,7 @@ function GrievanceList() {
 
   useEffect(() => {
     async function fetchGrievances() {
-      const res = await axios.get('https://backend-mu-ebon.vercel.app/api/admin/grievances', {
+      const res = await axios.get('https://grie-backend.vercel.app/api/admin/grievances', {
         headers: { 'x-auth-token': localStorage.getItem('token') },
       });
       setGrievances(res.data);
